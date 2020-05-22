@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const {prefix} = require('../config.json');
 module.exports = {
 	name: 'catgirl',
 	args: false,
