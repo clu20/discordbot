@@ -16,6 +16,28 @@ for (const file of commandFiles){
 	client.commands.set(command.name, command);
 }
 
+//On member join Voice Channel check to see if member is timed-out from kick cmd
+client.on('voiceStateUpdate', (oldmember, newmember) =>{
+	//checks if user is in a channel and/or was in a channel previously
+	console.log('in voicestate');
+	let oldvoice = oldmember.channelID;
+	let newvoice = newmember.channelID;
+	console.log(oldvoice);
+	console.log(newvoice);
+	if(oldvoice != newvoice){
+		if(oldvoice == null){
+			console.log("User Joined!");
+		}else if (newvoice == null){
+			console.log("User Left!");
+		}else{
+			console.log("User swapped Channels");
+	}
+	}
+})
+
+
+
+
 //Executes client commands
 client.on('message', msg =>{
 	let args = msg.content.substring(prefix.length).split(/ +/);

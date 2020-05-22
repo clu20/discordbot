@@ -5,6 +5,7 @@ module.exports = {
 	usage: '<user>',
 	guildOnly: true, //in servers
 	cooldown: 30, //time before another usage in seconds
+	timeout: 30, //timeout timer
 	aliases: ['test', 'timeout'], //multiple names for same command
 	execute(msg,args){
 		const user = msg.mentions.users.first();
