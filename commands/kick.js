@@ -1,3 +1,4 @@
+const {prefix} = require('../config.json');
 module.exports = {
 	name: 'kick',
 	description: 'kicks member from voice channel',
