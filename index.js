@@ -18,6 +18,7 @@ for (const file of commandFiles){
 
 //Executes client commands
 client.on('message', msg =>{
+	if (!msg.content.startsWith(prefix) || msg.author.bot) return;
 	let args = msg.content.substring(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
