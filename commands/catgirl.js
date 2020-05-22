@@ -15,7 +15,6 @@ module.exports = {
 		const [list] = await fetch(`https://yande.re/post.json?tags=nekomimi&&page=${page}&&limit=1`).then(response => response.json());
 		//if all other images are larger than 7MB send preview
 		let url = list.preview_url;
-		console.log(url);
 		if(list.file_size <= discordmax && list.file_size > max){
 			max = list.file_size;
 			url = list.file_url;
@@ -33,6 +32,9 @@ module.exports = {
 		//console.log(url);
 		//msg.channel.send(url);
 		msg.channel.send(list.sample_url);
+		console.log(page);
+		console.log(list);
+		//msg.channel.send(url);
 		console.log();
 		//const { file } = await fetch('https://aws.random.cat/meow').then(response => response.json());
 		//msg.channel.send(file);
