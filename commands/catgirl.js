@@ -8,7 +8,7 @@ module.exports = {
 	cooldown: 1,
 	async execute(msg, response){
 		//around 1500 posts for nekomimi tag select a random one using limit search and page number params
-		let page = Math.floor(Math.random()*1500);
+		let page = Math.floor(Math.random()*13000);
 		let max = -1;
 		//actual number is around 8MB but this is easier to work with
 		const discordmax = 1500000;
