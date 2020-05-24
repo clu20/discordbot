@@ -33,10 +33,10 @@ module.exports = {
 		//console.log(url);
 		//msg.channel.send(url);
 		msg.channel.send(list.sample_url);
-		console.log(page);
-		console.log(list);
+		//console.log(page);
+		//console.log(list);
 		//msg.channel.send(url);
-		console.log();
+		//console.log();
 		//const { file } = await fetch('https://aws.random.cat/meow').then(response => response.json());
 		//msg.channel.send(file);
 	}
