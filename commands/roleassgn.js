@@ -14,34 +14,42 @@ module.exports = {
 
 		//console.log(forest);
 		//console.log(test);
-		let roles = new Map();
+		let roles = [];
+		let emojis = [];
+		let desc = ``;
 		for(const [key, value] of Object.entries(rolemap)){
 			let role = guildroles.find(roles=>roles.name==key);
-			let emojipng = guildemojis.find(emojis=> emojis.name == value);;
+			let emojipng = guildemojis.find(emojis=> emojis.name == value);
 			if(!emojipng){continue;}
-			console.log(emojipng.url);
+			//sends associated Emoji and Role in chat
 			//msg.channel.send(`${emojipng}`);
+			//msg.channel.send(`${role}`);
 			//console.log(key);
 			if(!role){continue;}
 			//roles.push(role.name);
-			//roles.set()
-		}
-		console.log(roles);
-		/*const filter = (reaction, user) =>rolemap.includes(reaction.emoji.name);
+			emojis.push(emojipng);
+			desc = desc.concat(`${role.name}: `, `${emojipng}\n`);
 
+		}
+		const filter = (reaction, user) =>roles.includes(reaction.emoji.name);
 		const embed = new Discord.MessageEmbed()
 			.setTitle('Available Roles')
 			.setDescription(`
-				${rolemap}
+				${desc}
 
 			`)
 			.setColor(0xdd9323);
+
 		msg.channel.send(embed).then(async msg =>{
-			await msg.react('709546693967872031');
+			for(let emoji of emojis){
+				await msg.react(`${emoji.id}`);
+			}
+			
+
 		});
 
 		//msg.awaitReaction(filter)
-		//.then*/
+		//.then
 	}
 }
 
