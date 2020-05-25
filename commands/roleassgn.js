@@ -8,11 +8,19 @@ module.exports = {
 	args: false,
 	guildOnly: true,
 	async execute(msg, args){
-		const forest = await msg.guild.roles.cache;//.find(roles => roles.name === 'forest')
-		const test = forest.find(roles => roles.name === 'forest');
+		const guildroles = await msg.guild.roles.cache;//.find(roles => roles.name === 'forest')
+		//const test = guildroles.find(roles => roles.name === 'forest');
 
 		//console.log(forest);
-		console.log(test);
+		//console.log(test);
+		const roles = [];
+		for(const [key, value] of Object.entries(rolemap)){
+			let role = guildroles.find(roles=>roles.name==key);
+			//console.log(key);
+			if(!role){continue;}
+			roles.push(role.name);
+		}
+		console.log(roles);
 		/*const filter = (reaction, user) =>rolemap.includes(reaction.emoji.name);
 
 		const embed = new Discord.MessageEmbed()

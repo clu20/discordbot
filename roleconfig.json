@@ -1,0 +1,7 @@
+//Guild's roles that are to be auto assigned using roleassgn feature.
+{
+	"forest": "this is a test",
+	"shoot": "Another test",
+	"space gun": "Overwatch",
+	"GTFO": "another spoopy"
+}
