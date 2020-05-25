@@ -9,16 +9,22 @@ module.exports = {
 	guildOnly: true,
 	async execute(msg, args){
 		const guildroles = await msg.guild.roles.cache;//.find(roles => roles.name === 'forest')
+		const guildemojis = await msg.guild.emojis.cache;
 		//const test = guildroles.find(roles => roles.name === 'forest');
 
 		//console.log(forest);
 		//console.log(test);
-		const roles = [];
+		let roles = new Map();
 		for(const [key, value] of Object.entries(rolemap)){
 			let role = guildroles.find(roles=>roles.name==key);
+			let emojipng = guildemojis.find(emojis=> emojis.name == value);;
+			if(!emojipng){continue;}
+			console.log(emojipng.url);
+			//msg.channel.send(`${emojipng}`);
 			//console.log(key);
 			if(!role){continue;}
-			roles.push(role.name);
+			//roles.push(role.name);
+			//roles.set()
 		}
 		console.log(roles);
 		/*const filter = (reaction, user) =>rolemap.includes(reaction.emoji.name);
