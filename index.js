@@ -94,7 +94,7 @@ function roleReaction(guild){
 							let member = guild.members.cache.find(gm => gm.user.id === u.id);
 							//console.log(member);
 							let addedMember = member.roles.add(role);
-							console.log(`Member added to ${role.name}`);
+							console.log(`${member.nickname} added to ${role.name}`);
 						}catch(error){
 							console.log(error);
 						}
