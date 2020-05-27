@@ -7,13 +7,15 @@ module.exports = {
     name: 'yeet',
     description: 'gives smoke lineup gifs for the map and callout given',
 
-    execute(msg, args){
-        if(msg === 'yeet') {
-            const attachment = new MessageAttachment('https://gfycat.com/tepidpolishedboutu');
-            message.channel.send('${message.author},', attachment);
+    execute(message, args){
+        if(message.content.includes('yeet mirage jungle')) {
+            return message.channel.send('https://gfycat.com/tepidpolishedboutu');
+        }
+        else if(message.content.includes('yeet mirage window')){
+            return message.channel.send('https://gfycat.com/accomplishedvastamazondolphin-mirage-smoke-csgo');
         }
         else {
-            return message.channel.send('try the command again');
+            return message.channel.send('try again');
         }
         // return msg.channel.send('pls work');
 	},
