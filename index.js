@@ -7,6 +7,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
+const reactions = require('./roleconfig.json');
 
 const {prefix, token} = require('./config.json');
 
@@ -65,8 +66,51 @@ client.on('message', msg =>{
 	}
 })
 
+function roleReaction(guild){
+	//eventually will add command that saves this value in config file
+	msgID = '715284973028114513';
+	//eventually will add command that saves this value in config file
+	let channel = guild.channels.cache.find(ch=> ch.name==='testreaction');
+	//console.log(guild.channels.cache);
+	//console.log(channel);
+	channel.messages.fetch(msgID).then(msg =>{
+		//console.log(msg);
+		const filter = (reaction) =>{
+			//fix this to pull list from an edited config file/DB
+			return ['forest','shoot'].includes(reaction.emoji.name);
+		}
+
+		const collector = msg.createReactionCollector(filter, {});
+		collector.on('collect', (reaction, reactionCollector) => {
+			try{
+				//console.log(`${reaction.emoji.name}`);
+				//Roles name needs to be same as emoji name for ease of use and adding multiple roles later
+				let role = guild.roles.cache.find(r => r.name === reaction.emoji.name);
+				console.log(reaction.users.cache);
+				reaction.users.cache.each(u =>{
+					//don't add additional roles to client/bot
+					if(u != client.user){
+						try{
+							let member = guild.members.cache.find(gm => gm.user.id === u.id);
+							//console.log(member);
+							let addedMember = member.roles.add(role);
+							console.log(`Member added to ${role.name}`);
+						}catch(error){
+							console.log(error);
+						}
+					}
+				});
+			}catch(error){
+				console.log(error);
+			}
+		});
+	});
+}
+
 //client turned on
 client.login(token);
 client.once('ready', () =>{
 	console.log('Bot is online')
+	let guild = client.guilds.cache.first();
+	roleReaction(guild);
 });
