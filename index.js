@@ -77,7 +77,8 @@ function roleReaction(guild){
 		//console.log(msg);
 		const filter = (reaction) =>{
 			//fix this to pull list from an edited config file/DB
-			return ['forest','shoot'].includes(reaction.emoji.name);
+			//return ['forest','shoot'].includes(reaction.emoji.name);
+			return reactions.includes(reaction.emoji.name);
 		}
 
 		const collector = msg.createReactionCollector(filter, { dispose:true });
@@ -131,6 +132,8 @@ function roleReaction(guild){
 client.login(token);
 client.once('ready', () =>{
 	console.log('Bot is online')
-	let guild = client.guilds.cache.first();
-	roleReaction(guild);
+	//let guilds = client.guilds.cache.first();
+	client.guilds.cache.each(guild =>{
+		roleReaction(guild);
+	});
 });
