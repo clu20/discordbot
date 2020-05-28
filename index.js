@@ -80,13 +80,14 @@ function roleReaction(guild){
 			return ['forest','shoot'].includes(reaction.emoji.name);
 		}
 
-		const collector = msg.createReactionCollector(filter, {});
+		const collector = msg.createReactionCollector(filter, { dispose:true });
 		collector.on('collect', (reaction, reactionCollector) => {
 			try{
 				//console.log(`${reaction.emoji.name}`);
 				//Roles name needs to be same as emoji name for ease of use and adding multiple roles later
 				let role = guild.roles.cache.find(r => r.name === reaction.emoji.name);
-				console.log(reaction.users.cache);
+				//console.log(reaction.users);
+				//console.log(reaction.users.cache);
 				reaction.users.cache.each(u =>{
 					//don't add additional roles to client/bot
 					if(u != client.user){
@@ -94,7 +95,10 @@ function roleReaction(guild){
 							let member = guild.members.cache.find(gm => gm.user.id === u.id);
 							//console.log(member);
 							let addedMember = member.roles.add(role);
+							//sees if member has role already
+							//console.log(member.roles.cache.has('forest'));
 							console.log(`${member.nickname} added to ${role.name}`);
+							//console.log(member.roles.cache);
 						}catch(error){
 							console.log(error);
 						}
@@ -103,6 +107,22 @@ function roleReaction(guild){
 			}catch(error){
 				console.log(error);
 			}
+		});
+
+		collector.on('remove', (reaction, reactionCollector) =>{
+			let role = guild.roles.cache.find( r=> r.name === reaction.emoji.name);
+			console.log(reactionCollector);
+			//console.log(reaction.users);
+			//console.log(reaction.user);
+			//console.log(reaction);
+			try{
+				let member = guild.members.cache.find(gm => gm.user.id === reactionCollector.id);
+				let removedMember = member.roles.remove(role);
+				console.log(`${member.nickname} removed from ${role.name}`);
+			}catch(error){
+				console.log(error);
+			}
+
 		});
 	});
 }
