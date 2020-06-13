@@ -7,6 +7,21 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
+
+// init DB
+const firebase = require('firebase/app');
+const fieldValue = require('firebase-admin').firestore.FieldValue;
+const admin = require('firebase-admin');
+const serviceAccount = require('./serviceAccount.json');
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount)
+})
+
+let db = admin.firestore();
+
+
+//current folder used for reactions
 const reactions = require('./roleconfig.json');
 
 const {prefix, token} = require('./config.json');
@@ -59,14 +74,25 @@ client.on('message', msg =>{
 
 	//execute command if all previous conds satisfied
 	try{
-		command.execute(msg,args);
+		command.execute(msg,args,db);
 	} catch (error){
 		console.error(error);
 		msg.reply("there was an error complain pls");
 	}
 })
 
-function roleReaction(guild){
+client.on('guildCreate', async  gData =>{
+	db.collection('guilds').doc(gData.id).set({
+		'guildID': gData.id,
+		'guildName': gData.name,
+		'guildOwner': gData.owner.user.username,
+		'guildOwnerID': gData.owner.id,
+		'guildMemberCount': gData.memberCount,
+		'prefix': '!'
+	});
+});
+
+/*function roleReaction(guild){
 	//eventually will add command that saves this value in config file
 	msgID = '715284973028114513';
 	//eventually will add command that saves this value in config file
@@ -126,7 +152,7 @@ function roleReaction(guild){
 
 		});
 	});
-}
+}*/
 
 //client turned on
 client.login(token);
