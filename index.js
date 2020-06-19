@@ -65,6 +65,16 @@ client.on('message', msg =>{
 	}
 })
 
+//Do function intervally
+client.setInterval(test, 60*60*1000);
+
+function test(){
+	client.guilds.cache.each(guild=>{
+		let channel = guild.channels.cache.find(ch=> ch.name==='test');
+		channel.send('this is a tes to send a message every hour');
+	});	
+}
+
 //client turned on
 client.login(token);
 client.once('ready', () =>{
