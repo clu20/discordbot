@@ -10,6 +10,9 @@ module.exports ={
 	async execute(msg,args, db){
 		tipped = null;
 		const tip = Number(args[1]);
+		tipperuser = msg.guild.member(msg.author);
+		tipper = tipperuser.nickname;
+		if(tipper == null){ tipper = tipperuser.username;}
 		var total_tips = 0;
 		if(!Number.isInteger(tip)){return msg.channel.send("Please use a whole number tip amount");}
 		const user = msg.mentions.users.first();
@@ -18,11 +21,14 @@ module.exports ={
 			if(member){
 				tipped = member.nickname;
 				if(tipped == null){
-					tipped = user.tag;
+					tipped = user.username;
 				}
 			}else{ return msg.channel.send("You're not in the same server as your Queen");}
 		}else{return msg.channel.send("Must mention a Queen to simpo for");}
 
+		if(tipper == tipped){
+			return msg.channel.send("You cannot tip yourself");
+		}
 		db.collection('tipped_users').doc(user.id).get().then((user) =>{
 			if(user.exists){
 				total_tips = user.data().tips;
@@ -36,7 +42,7 @@ module.exports ={
 			db.collection('tipped_users').doc(user.id).update({
 				'tips': total_tips + tip
 			}).then(()=>{
-				return msg.channel.send(`tipping ${tipped} ${tip} coins`);
+				return msg.channel.send(`\`${tipper}\` simpped out ${tip} coin(s) for \`${tipped}\``);
 			});
 		});
 
