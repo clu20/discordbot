@@ -74,7 +74,14 @@ client.on('message', msg =>{
 
 	//execute command if all previous conds satisfied
 	try{
-		command.execute(msg,args,db);
+		if(command.dbAcc){
+			console.log('access db');
+			command.execute(msg,args,db);
+		}else{
+			console.log('not db');
+			command.execute(msg,args);
+		}
+		//command.execute(msg,args,db);
 	} catch (error){
 		console.error(error);
 		msg.reply("there was an error complain pls");
@@ -159,7 +166,7 @@ client.login(token);
 client.once('ready', () =>{
 	console.log('Bot is online')
 	//let guilds = client.guilds.cache.first();
-	client.guilds.cache.each(guild =>{
+	/*client.guilds.cache.each(guild =>{
 		roleReaction(guild);
-	});
+	});*/
 });
