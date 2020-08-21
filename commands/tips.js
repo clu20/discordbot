@@ -6,12 +6,15 @@ module.exports ={
 	guildOnly: true,
 	dbAcc: true,
 	async execute(msg,args, db){
+		user = msg.guild.member(msg.author);
+		authorName = user.nickname;
+		if(authorName == null){ authorName = user.username;}
 		if(!args.length){
 			db.collection('tipped_users').doc(msg.author.id).get().then((id)=>{
 				if(id.exists){
-					return msg.channel.send(`You currently have \`${id.data().tips}\` coins`);
+					return msg.channel.send(`\`${authorName}\` currently has \`${id.data().tips}\` coins`);
 				}else{
-					return msg.channel.send("You have no simps");
+					return msg.channel.send(` \`${authorName}\` has no simps`);
 				}
 			});
 		}
