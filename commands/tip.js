@@ -12,7 +12,7 @@ module.exports ={
 		const tip = Number(args[1]);
 		tipperuser = msg.guild.member(msg.author);
 		tipper = tipperuser.nickname;
-		if(tipper == null){ tipper = tipperuser.username;}
+		if(tipper == null){ tipper = msg.author.username;}
 		var total_tips = 0;
 		if(!Number.isInteger(tip)){return msg.channel.send("Please use a whole number tip amount");}
 		const user = msg.mentions.users.first();

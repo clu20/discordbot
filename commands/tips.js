@@ -8,7 +8,7 @@ module.exports ={
 	async execute(msg,args, db){
 		user = msg.guild.member(msg.author);
 		authorName = user.nickname;
-		if(authorName == null){ authorName = user.username;}
+		if(authorName == null){ authorName = msg.author.username;}
 		if(!args.length){
 			db.collection('tipped_users').doc(msg.author.id).get().then((id)=>{
 				if(id.exists){
