@@ -1,14 +1,17 @@
 //Node.js Filesystem
 const fs = require('fs');
+
 //Adds all cmds from command folder
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
-const {prefix, token} = require('./config.json');
+const {prefix, token, YoutubeAPIKey} = require('./config.json');
+
 
 //grab all client commands
 for (const file of commandFiles){
@@ -44,9 +47,10 @@ client.on('message', msg =>{
 	//convert to miliseconds
 	const cooldownAmount = (command.cooldown || 3) * 1000;
 
+	//set cooldown for author before using cmd again
 	if(timestamps.has(msg.author.id)){
 		const expirationTime = timestamps.get(msg.author.id) + cooldownAmount;
-
+		//if timer hasn't expired notify user how long they have left on cooldown
 		if( now < expirationTime){
 			const timeLeft = (expirationTime - now) / 1000;
 			return msg.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing \`${command.name}\``);

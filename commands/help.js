@@ -1,3 +1,4 @@
+// {name} as matched in js module will set {name} to matching module name
 const {prefix} = require('../config.json');
 const Discord = require('discord.js');
 
